@@ -21,6 +21,54 @@ class CarTest extends TestCase
     public function shouldGetInfoAboutDrive()
     {
         $car = new Car();
-        $this->assertEquals(new Engine(), $car->drive());
+        $car->run();
+        $car->enableDriveMode();
+        $this->assertEquals("I'm driving", $car->drive());
+    }
+
+    public function shouldChangeStateToDriveAndGetInfo()
+    {
+        $car = new Car();
+        $car->run();
+        $this->assertEquals("I'm driving", $car->drive());
+    }
+
+    public function shouldTurnEngineOnAndChangeStateToDrive()
+    {
+        $car = new Car();
+        $car->run();
+        $this->assertEquals("I'm driving", $car->drive());
+    }
+
+    public function shouldEnableDriveMode()
+    {
+        $car = new Car();
+        $car->enableDriveMode();
+
+        $this->assertEquals("DRIVE", $car->getActualDriveState());
+    }
+
+    public function shouldEnableReverseMode()
+    {
+        $car = new Car();
+        $car->enableReverseMode();
+
+        $this->assertEquals("REVERSE", $car->getActualDriveState());
+    }
+
+    public function shouldEnableNeutralMode()
+    {
+        $car = new Car();
+        $car->enableNeutralMode();
+
+        $this->assertEquals("NEUTRAL", $car->getActualDriveState());
+    }
+
+    public function shouldEnableParkingMode()
+    {
+        $car = new Car();
+        $car->enableParkingMode();
+
+        $this->assertEquals("PARKING", $car->getActualDriveState());
     }
 }

@@ -8,6 +8,7 @@ use App\enigine\Engine;
 use App\vehicles\AirPlane;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
+
 /** @test */
 class AirplaneTest extends TestCase
 {
@@ -20,10 +21,44 @@ class AirplaneTest extends TestCase
     public function shouldGetInformationAboutFly()
     {
         $plane = new AirPlane();
+        $plane->run();
+        $plane->enableFlyMode();
         $this->assertEquals("I'm flying", $plane->fly());
     }
-    public function shouldGetInflormationAboutFly()
+
+    public function shouldEnableFlyModAndThenGetInfoAboutFly()
     {
-        $this->assertEquals(1, 1);
+        $plane = new AirPlane();
+        $plane->run();
+        $this->assertEquals("I'm flying", $plane->fly());
+    }
+
+    public function shouldEnableFlyModAndTurnOnEngineThenGetInfoAboutFly()
+    {
+        $plane = new AirPlane();
+        $plane->run();
+        $this->assertEquals("I'm flying", $plane->fly());
+    }
+
+    public function shouldEnableDriveMode()
+    {
+        $plane = new AirPlane();
+        $plane->enableDriveMode();
+        $this->assertEquals("DRIVE", $plane->getActualDriveState());
+
+    }
+
+    public function shouldEnableFlyMode()
+    {
+        $plane = new AirPlane();
+        $plane->enableFlyMode();
+        $this->assertEquals("FLY", $plane->getActualDriveState());
+
+    }    public function shouldEnablePMode()
+    {
+        $plane = new AirPlane();
+        $plane->enableParkingMode();
+        $this->assertEquals("PARKING", $plane->getActualDriveState());
+
     }
 }
