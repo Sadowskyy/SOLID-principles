@@ -8,7 +8,7 @@ use App\gearbox\RPM;
 
 class Engine
 {
-    private $isTurnOn;
+    private $isTurnOn = false;
     private RPM $actualRpms;
 
 
@@ -21,15 +21,20 @@ class Engine
     public static function turnOn()
     {
         $engine = new Engine();
-        $engine = $engine->setIsTurnOn(true);
+        $engine->setRunStatus(true);
 
         return new Engine();
+    }
+
+    public function drivingRpms()
+    {
+        $this->actualRpms->setActualRpms(RPM::setActualRpmsForRunningEngine());
     }
 
     public function turnOff()
     {
         $this->isTurnOn = false;
-        $this->actualRpms->setActualRpms(RPM::engineOffRpms($this->actualRpms));
+        $this->actualRpms->setActualRpms(RPM::engineOffRpms());
     }
 
     public function isRunning()
@@ -37,13 +42,18 @@ class Engine
         return $this->isTurnOn;
     }
 
-    public function getActualRpms(): RPM
+    public function getActualRpms(): int
     {
-        return $this->actualRpms;
+        return $this->actualRpms->getActualRpmsAsNumber();
     }
 
-    public function setIsTurnOn(bool $isTurnOn): void
+    public function setRunStatus(bool $isTurnOn): void
     {
         $this->isTurnOn = $isTurnOn;
+    }
+
+    public function setActualRpms(RPM $actualRpms): void
+    {
+        $this->actualRpms = $actualRpms;
     }
 }
