@@ -11,10 +11,20 @@ use Symfony\Component\Routing\Annotation\Route;
 /** @test */
 class EngineTest extends TestCase
 {
- public function turnEngineOn(){
-     $engine = new Engine();
-     $engine->turnOn();
+    public function turnEngineOn()
+    {
+        $engine = new Engine();
+        $engine->turnOn();
 
-     $this->assertEquals(true, $engine->isRunning());
- }
+        $this->assertEquals(true, $engine->isRunning());
+    }
+
+    public function turnEngineOff()
+    {
+        $engine = new Engine();
+        $engine->turnOn();
+        $engine->turnOff();
+
+        $this->assertEquals(false, $engine->isRunning());
+    }
 }
