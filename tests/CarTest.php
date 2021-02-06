@@ -5,9 +5,9 @@ namespace App\Tests;
 
 
 use App\enigine\Engine;
+use App\gearbox\RPM;
 use App\vehicles\Car;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\Annotation\Route;
 
 /** @test */
 class CarTest extends TestCase
@@ -70,5 +70,51 @@ class CarTest extends TestCase
         $car->enableParkingMode();
 
         $this->assertEquals("PARKING", $car->getActualDriveState());
+    }
+
+    public function shouldTurnOffRunningEngine()
+    {
+        $car = new Car();
+        $car->run();
+        $car->turnOff();
+
+        $this->assertEquals(0, $car->getEngine()->getActualRpms());
+    }
+
+    public function shouldChangeGearToNext()
+    {
+        $car = new Car();
+        $currentRpm = new RPM();
+        $currentRpm->setActualRpms(4200);
+
+        $car->run();
+        $car->getEngine()->setActualRpms($currentRpm);
+
+        $this->assertEquals(2, $car->changeGear());
+    }
+
+    public function shouldDontChangeGear()
+    {
+        $car = new Car();
+        $currentRpm = new RPM();
+        $currentRpm->setActualRpms(1600);
+
+        $car->run();
+        $car->getEngine()->setActualRpms($currentRpm);
+
+        $this->assertEquals(1, $car->changeGear());
+    }
+
+    public function shouldChangeGearToPrevious()
+    {
+        $car = new Car();
+        $currentRpm = new RPM();
+        $currentRpm->setActualRpms(1600);
+
+        $car->run();
+        $car->setActualGear(2);
+        $car->getEngine()->setActualRpms($currentRpm);
+
+        $this->assertEquals(1, $car->changeGear());
     }
 }

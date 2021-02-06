@@ -6,23 +6,21 @@ namespace App\Tests;
 
 use App\enigine\Engine;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\Annotation\Route;
 
 /** @test */
 class EngineTest extends TestCase
 {
     public function turnEngineOn()
     {
-        $engine = new Engine();
-        $engine->turnOn();
+        $engine = Engine::turnOn();
 
         $this->assertEquals(true, $engine->isRunning());
     }
 
     public function turnEngineOff()
     {
-        $engine = new Engine();
-        $engine->turnOn();
+        $engine = Engine::turnOn();
+
         $engine->turnOff();
 
         $this->assertEquals(false, $engine->isRunning());

@@ -23,7 +23,7 @@ class Engine
         $engine = new Engine();
         $engine->setRunStatus(true);
 
-        return new Engine();
+        return $engine;
     }
 
     public function drivingRpms()
@@ -33,8 +33,11 @@ class Engine
 
     public function turnOff()
     {
-        $this->isTurnOn = false;
-        $this->actualRpms->setActualRpms(RPM::engineOffRpms());
+        if ($this->isRunning()) {
+            $this->isTurnOn = false;
+            $this->actualRpms->setActualRpms(RPM::engineOffRpms());
+        } else
+            return;
     }
 
     public function isRunning()

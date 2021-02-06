@@ -25,7 +25,7 @@ class RPM
     }
 
 
-    public function setActualRpms($actualRpms): void
+    public function setActualRpms(int $actualRpms): void
     {
         $this->actualRpms = $actualRpms;
     }
